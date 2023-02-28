@@ -1,0 +1,4 @@
+digraph sistema_basico {
+  node [shape=box];
+  entrada -> processo -> saida;
+}
