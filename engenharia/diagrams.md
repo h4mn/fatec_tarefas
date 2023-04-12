@@ -27,3 +27,42 @@ sequenceDiagram
     OpenAI Server->>Eu: Sim, eu sei. Você pode usar essas linguagens com markdown para formatar seus textos e incluir equações e gráficos em seus documentos.
 
 ```
+
+## Diagramas de Sequência Cadastrar Cliente
+
+O atendente da loja inicia o processo de cadastro do cliente;
+O atendente solicita as informações pessoais do cliente;
+O cliente fornece as informações solicitadas;
+O atendente acessa o sistema de gerenciamento de clientes;
+O sistema exibe a tela de cadastro;
+O atendente insere as informações do cliente nos campos correspondentes;
+O sistema valida os dados inseridos;
+O sistema verifica se o CPF do cliente já está cadastrado;
+O sistema cria um novo registro para o cliente;
+O sistema armazena as informações do cliente no banco de dados;
+O sistema exibe uma mensagem de confirmação do cadastro;
+O atendente entrega um cartão de fidelidade ao cliente.
+
+```mermaid
+
+sequenceDiagram
+    participant Atendente
+    participant Cliente
+    participant Sistema
+    participant Banco de Dados
+    Atendente->>Sistema: Iniciar cadastro
+    Sistema->>Atendente: Solicitar informações pessoais
+    Cliente->>Atendente: Fornece informações
+    Atendente->>Sistema: Acessa sistema de gerenciamento de clientes
+    Sistema->>Atendente: Exibe tela de cadastro
+    Atendente->>Sistema: Insere informações do cliente
+    Sistema->>Atendente: Valida dados inseridos
+    Sistema->>Atendente: Verifica se CPF já está cadastrado
+    Sistema->>Banco de Dados: Cria novo registro
+    Sistema->>Banco de Dados: Armazena informações do cliente
+    Sistema->>Atendente: Exibe mensagem de confirmação
+    Atendente->>Cliente: Entrega cartão de fidelidade
+
+```
+
+```
