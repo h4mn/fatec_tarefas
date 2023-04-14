@@ -10,17 +10,108 @@ Para usar o Mermaid, basta criar um arquivo markdown e adicionar o código do di
 
 ## 2. Diagrama de Caso de Uso
 
-Como fazer um diagrama de caso de uso utilizando o Mermaid?
+Diagrama de caso de uso é uma ferramenta da UML (Unified Modeling Language) utilizada para descrever o comportamento funcional de um sistema a partir da perspectiva do usuário. É uma representação gráfica que mostra as interações entre o usuário e o sistema em questão, bem como as relações entre os diferentes casos de uso e seus atores.
 
-Crie uma narrativa contendo os atores e as funcionalidades do sistema. A narrativa deve ser escrita em linguagem natural, sem utilizar termos técnicos. A narrativa deve ser escrita no formato de uma história, onde o ator é o protagonista e o sistema é o coadjuvante.
+### 2.1 Ambiente para o Vendedor
 
-### 2.1 Narrativa
+#### Narrativa
 
-- Narrativa para Ambiente para o Vendedor:
-O vendedor acessa o sistema utilizando suas credenciais de login e tem acesso a todas as funcionalidades do ambiente do vendedor, incluindo o cadastro de clientes, cadastro de produtos, controle dos fiados, envio de cobranças e registro dos pagamentos. O vendedor pode também gerar relatórios de vendas e resultados por período, bem como visualizar a vitrine inicial com os indicadores de resultados.
+O vendedor acessa o sistema utilizando suas credenciais de login, que podem ser obtidas através do cadastro pelo Google ou pelo cadastro direto no sistema. Assim, tem acesso a todas as funcionalidades do ambiente do vendedor, incluindo o cadastro de clientes, cadastro de produtos, controle dos fiados, envio de cobranças e registro dos pagamentos. O vendedor pode também gerar relatórios de vendas e resultados por período, bem como visualizar a vitrine inicial com os indicadores de resultados.
 
-- Narrativa para Ambiente para o Cliente:
-O cliente acessa o sistema utilizando suas credenciais de login, que podem ser obtidas através do cadastro pelo Google ou pelo cadastro direto no sistema. O cliente tem acesso às suas informações de cadastro, como nome, endereço e histórico de compras, bem como a funcionalidade de comprar fiado pelo QRCode. O cliente pode também visualizar seus fiados em aberto e os produtos disponíveis na loja.
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso do Ambiente do Vendedor
+---
+graph LR
+    A[Vendedor] --- B([Login])
+    subgraph "`Sistema / **Ambiente do Vendedor**`"
+        direction TB
+        L[Pelo Google] -.-> B
+        B --- C[Vitrine Inicial]
+        C --- D([Cadastro de Clientes])
+        C --- E([Cadastro de Produtos])
+        C --- F([Controle dos Fiados])
+        C --- G([Envio de Cobranças])
+        C --- H([Registro dos Pagamentos])
+        C --- I[Indicadores de Resultados]
+        C --- J([Relatórios de Vendas])
+        C --- K([Relatórios de Resultados])
+        I --> J
+        I --> K
+    end
+```
+
+### 2.2 Ambiente para o Cliente
+
+#### Narrativa
+
+O cliente acessa o sistema utilizando suas credenciais de login, e um token recebido através de um convite. O cliente tem acesso às suas informações de cadastro, como nome, endereço e histórico de compras, a funcionalidade de comprar fiado pelo QRCode, bem como o pagamento dos fiados via PIX. O cliente pode também visualizar seus fiados em aberto e os produtos disponíveis na loja.
+
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso do Ambiente do Cliente
+---
+graph LR
+    A[Cliente] --- B([Login])
+    subgraph "`Sistema / **Ambiente do Cliente**`"
+        direction TB
+        L[Convite / Token] -.-> B
+        B --- C[Vitrine Inicial]
+        C --- D([Informações do Cliente])
+        C --- E([Comprar Fiado pelo QRCode])
+        C --- F([Fiados em Aberto])
+        C --- G([Produtos Disponíveis])
+        C --- H([Pagamento dos Fiados])
+    end
+```
+
+## 3. Diagramas de Sequencia
+
+Diagrama de Sequência é uma ferramenta da UML (Unified Modeling Language) utilizada para modelar a interação entre objetos em um sistema. Ele descreve a sequência de eventos que ocorrem ao longo do tempo e como os objetos colaboram para realizar uma determinada tarefa.
+
+O diagrama de sequência mostra a interação entre objetos em uma linha do tempo, destacando as mensagens trocadas entre eles. Ele é útil para entender como um sistema funciona, mostrando como os objetos se comunicam e colaboram uns com os outros para alcançar um objetivo.
+
+### 3.1 Cadastrar Cliente
+
+- O atendente da loja inicia o processo de cadastro do cliente;
+- O atendente solicita as informações pessoais do cliente;
+- O cliente fornece as informações solicitadas;
+- O atendente acessa o sistema de gerenciamento de clientes;
+- O sistema exibe a tela de cadastro;
+- O atendente insere as informações do cliente nos campos correspondentes;
+- O sistema valida os dados inseridos;
+- O sistema verifica se o CPF do cliente já está cadastrado;
+- O sistema cria um novo registro para o cliente;
+- O sistema armazena as informações do cliente no banco de dados;
+- O sistema exibe uma mensagem de confirmação do cadastro;
+- O atendente entrega um cartão de fidelidade ao cliente.
+
+```mermaid
+---
+title: Diagrama de Sequencia do Cadastro de Cliente
+---
+sequenceDiagram
+    participant Atendente
+    participant Cliente
+    participant Sistema
+    participant Banco de Dados
+    Atendente->>Sistema: Iniciar cadastro
+    Sistema->>Atendente: Solicitar informações pessoais
+    Cliente->>Atendente: Fornece informações
+    Atendente->>Sistema: Acessa sistema de gerenciamento de clientes
+    Sistema->>Atendente: Exibe tela de cadastro
+    Atendente->>Sistema: Insere informações do cliente
+    Sistema->>Atendente: Valida dados inseridos
+    Sistema->>Atendente: Verifica se CPF já está cadastrado
+    Sistema->>Banco de Dados: Cria novo registro
+    Sistema->>Banco de Dados: Armazena informações do cliente
+    Sistema->>Atendente: Exibe mensagem de confirmação
+    Atendente->>Cliente: Entrega cartão de fidelidade
+```
 
 - Narrativa para Login pelo Google:
 O usuário seleciona a opção de login pelo Google e é redirecionado para a API do Google, onde insere suas credenciais de login. Após a autenticação, o usuário é redirecionado de volta ao sistema, onde suas informações são validadas e o acesso é liberado.
@@ -63,53 +154,5 @@ O usuário seleciona a opção de relatórios de contas e pode visualizar relat�
 
 - Narrativa para Relatório de Resultados por Período:
 O usuário seleciona a opção de relatório de resultados por período e pode visualizar um relatório com os resultados de vendas e faturamento por dia, semana e mês, além de outras informações relevantes para análise do desempenho do negócio.
-
-### 2.2 Diagrama de Caso de Uso
-
-```mermaid
-
-
-
-
-
-
-## 3. Diagramas de Sequencia
-
-### 3.1 Cadastrar Cliente
-
-O atendente da loja inicia o processo de cadastro do cliente;
-O atendente solicita as informações pessoais do cliente;
-O cliente fornece as informações solicitadas;
-O atendente acessa o sistema de gerenciamento de clientes;
-O sistema exibe a tela de cadastro;
-O atendente insere as informações do cliente nos campos correspondentes;
-O sistema valida os dados inseridos;
-O sistema verifica se o CPF do cliente já está cadastrado;
-O sistema cria um novo registro para o cliente;
-O sistema armazena as informações do cliente no banco de dados;
-O sistema exibe uma mensagem de confirmação do cadastro;
-O atendente entrega um cartão de fidelidade ao cliente.
-
-```mermaid
-
-sequenceDiagram
-    participant Atendente
-    participant Cliente
-    participant Sistema
-    participant Banco de Dados
-    Atendente->>Sistema: Iniciar cadastro
-    Sistema->>Atendente: Solicitar informações pessoais
-    Cliente->>Atendente: Fornece informações
-    Atendente->>Sistema: Acessa sistema de gerenciamento de clientes
-    Sistema->>Atendente: Exibe tela de cadastro
-    Atendente->>Sistema: Insere informações do cliente
-    Sistema->>Atendente: Valida dados inseridos
-    Sistema->>Atendente: Verifica se CPF já está cadastrado
-    Sistema->>Banco de Dados: Cria novo registro
-    Sistema->>Banco de Dados: Armazena informações do cliente
-    Sistema->>Atendente: Exibe mensagem de confirmação
-    Atendente->>Cliente: Entrega cartão de fidelidade
-
-```
 
 ## 4. Diagramas de Classes
