@@ -69,6 +69,140 @@ graph LR
     end
 ```
 
+### 2.3 Cadastro de Clientes
+
+#### Narrativa
+
+O usuário seleciona a opção de cadastro de clientes e preenche os campos com as informações solicitadas. As informações são validadas e armazenadas na API do Firebase, que é responsável pelo armazenamento dos dados dos clientes.
+
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso do Cadastro de Clientes
+---
+graph LR
+    A[Usuário] --- B[Cadastro de Clientes]
+    subgraph "`Sistema / **Cadastro de Clientes**`"
+        direction TB
+        B --- C([Lançamento dos Dados do Cliente])
+        B --- D([Armazenamento dos dados dos clientes])
+    end
+    D --- F[API do Firebase]
+```
+
+### 2.4 Cadastro de Produtos
+
+#### Narrativa
+
+O usuário seleciona a opção de cadastro de produto e preenche os campos com as informações solicitadas, incluindo o QRCode do produto. As informações são validadas e armazenadas na API do Firebase.
+
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso do Cadastro de Produtos
+---
+graph LR
+    A[Usuário] --- B[Cadastro de Produtos]
+    subgraph "`Sistema / **Cadastro de Produtos**`"
+        direction TB
+        B --- C([Lançamento dos Dados do Produto])
+        B --- D([Armazenamento dos dados dos produtos])
+    end
+    D --- F[API do Firebase]
+```
+
+### 2.5 Relatório de Produtos com QRCode
+
+#### Narrativa
+
+O usuário seleciona a opção de relatório de produtos com QRCode e pode visualizar um relatório com os produtos cadastrados no sistema, incluindo as informações de cada produto e o QRCode correspondente.
+
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso do Relatório de Produtos com QRCode
+---
+graph LR
+    A[Usuário] --- B[Relatório de Produtos com QRCode]
+    subgraph "`Sistema / **Relatório de Produtos com QRCode**`"
+        direction TB
+        B --- C([Visualização dos Produtos])
+    end
+```
+
+### 2.6 Comprar Fiado pelo QRCode
+
+#### Narrativa
+
+O cliente seleciona a opção de comprar fiado pelo QRCode e escaneia o QRCode do produto desejado. O sistema verifica se o cliente tem limite de crédito disponível e autoriza a compra, que é registrada na API do Firebase.
+
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso do Comprar Fiado pelo QRCode
+---
+graph LR
+    A[Cliente] --- B[Comprar Fiado pelo QRCode]
+    subgraph "`Sistema / **Comprar Fiado pelo QRCode**`"
+        direction TB
+        B --- C([Escaneamento do QRCode])
+        B --- D([Verificação do Limite de Crédito])
+        B --- E([Autorização da Compra])
+        B --- F([Registro da Compra])
+    end
+    F --- G[API do Firebase]
+```
+
+### 2.7 Controle dos Fiados
+
+#### Narrativa
+
+O usuário seleciona a opção de controle dos fiados e pode visualizar os fiados em aberto de todos os clientes cadastrados no sistema. O usuário pode gerenciar os fiados, incluindo a geração de cobranças individuais e em lote, bem como o registro dos pagamentos recebidos.
+
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso do Controle dos Fiados
+---
+graph LR
+    A[Usuário] --- B[Controle dos Fiados]
+    subgraph "`Sistema / **Controle dos Fiados**`"
+        direction TB
+        B --- C([Visualização dos Fiados em Aberto])
+        B --- D([Geração de Cobranças Individuais])
+        B --- E([Geração de Cobranças em Lote])
+        B --- F([Registro dos Pagamentos])
+    end
+```
+
+### 2.0 Lista de Narrativas
+
+- Narrativa para Envio de Cobrança Individual:
+O usuário seleciona a opção de envio de cobrança individual e seleciona o cliente e o produto desejado. O sistema gera uma cobrança individual, que é enviada ao cliente via e-mail ou SMS.
+
+- Narrativa para Envio de Cobrança em Lote:
+O usuário seleciona a opção de envio de cobrança em lote e seleciona um grupo de clientes e produtos. O sistema gera uma cobrança em lote, que é enviada aos clientes via e-mail ou SMS.
+
+- Narrativa para Integração com o PIX:
+O sistema é integrado à API do PIX e permite o pagamento dos fiados via PIX. O cliente pode selecionar a opção de pagar via PIX e escanear o QRCode gerado pelo sistema. O pagamento é registrado na API do Firebase.
+
+- Narrativa para Registro dos Pagamentos:
+O usuário seleciona a opção de registro dos pagamentos e pode registrar os pagamentos recebidos de cada cliente, incluindo a forma de pagamento (PIX, dinheiro, cartão, etc.) e a data do pagamento. As informações são registradas na API do Firebase.
+
+- Narrativa para Vitrine Inicial com Indicadores de Resultado:
+O sistema exibe uma vitrine inicial com os produtos mais vendidos e os indicadores de resultados, incluindo o faturamento do dia, semana e mês, bem como a quantidade de fiados em aberto.
+
+- Narrativa para Relatórios de Contas (Vencido, A Vencer):
+O usuário seleciona a opção de relatórios de contas e pode visualizar relatórios das contas vencidas e a vencer, bem como os clientes com fiados em aberto e o valor total devido.
+
+- Narrativa para Relatório de Resultados por Período:
+O usuário seleciona a opção de relatório de resultados por período e pode visualizar um relatório com os resultados de vendas e faturamento por dia, semana e mês, além de outras informações relevantes para análise do desempenho do negócio.
+
 ## 3. Diagramas de Sequencia
 
 Diagrama de Sequência é uma ferramenta da UML (Unified Modeling Language) utilizada para modelar a interação entre objetos em um sistema. Ele descreve a sequência de eventos que ocorrem ao longo do tempo e como os objetos colaboram para realizar uma determinada tarefa.
@@ -113,46 +247,13 @@ sequenceDiagram
     Atendente->>Cliente: Entrega cartão de fidelidade
 ```
 
-- Narrativa para Login pelo Google:
-O usuário seleciona a opção de login pelo Google e é redirecionado para a API do Google, onde insere suas credenciais de login. Após a autenticação, o usuário é redirecionado de volta ao sistema, onde suas informações são validadas e o acesso é liberado.
-
-- Narrativa para Cadastro de Clientes:
-O usuário seleciona a opção de cadastro de clientes e preenche os campos com as informações solicitadas. As informações são validadas e armazenadas na API do Firebase, que é responsável pelo armazenamento dos dados dos clientes.
-
-- Narrativa para Cadastrar Cliente pela Lista de Contatos:
-O usuário seleciona a opção de cadastrar cliente pela lista de contatos e seleciona um contato de sua lista. As informações do contato são preenchidas automaticamente nos campos correspondentes do cadastro de cliente e o usuário pode editar e/ou complementar as informações, se necessário. As informações são validadas e armazenadas na API do Firebase.
-
-- Narrativa para Cadastro de Produto:
-O usuário seleciona a opção de cadastro de produto e preenche os campos com as informações solicitadas, incluindo o QRCode do produto. As informações são validadas e armazenadas na API do Firebase.
-
-- Narrativa para Controle dos Fiados:
-O usuário seleciona a opção de controle dos fiados e pode visualizar os fiados em aberto de todos os clientes cadastrados no sistema. O usuário pode gerenciar os fiados, incluindo a geração de cobranças individuais e em lote, bem como o registro dos pagamentos recebidos.
-
-- Narrativa para Comprar Fiado pelo QRCode:
-O cliente seleciona a opção de comprar fiado pelo QRCode e escaneia o QRCode do produto desejado. O sistema verifica se o cliente tem limite de crédito disponível e autoriza a compra, que é registrada na API do Firebase.
-
-- Narrativa para Envio de Cobrança Individual:
-O usuário seleciona a opção de envio de cobrança individual e seleciona o cliente e o produto desejado. O sistema gera uma cobrança individual, que é enviada ao cliente via e-mail ou SMS.
-
-- Narrativa para Envio de Cobrança em Lote:
-O usuário seleciona a opção de envio de cobrança em lote e seleciona um grupo de clientes e produtos. O sistema gera uma cobrança em lote, que é enviada aos clientes via e-mail ou SMS.
-
-- Narrativa para Integração com o PIX:
-O sistema é integrado à API do PIX e permite o pagamento dos fiados via PIX. O cliente pode selecionar a opção de pagar via PIX e escanear o QRCode gerado pelo sistema. O pagamento é registrado na API do Firebase.
-
-- Narrativa para Registro dos Pagamentos:
-O usuário seleciona a opção de registro dos pagamentos e pode registrar os pagamentos recebidos de cada cliente, incluindo a forma de pagamento (PIX, dinheiro, cartão, etc.) e a data do pagamento. As informações são registradas na API do Firebase.
-
-- Narrativa para Vitrine Inicial com Indicadores de Resultado:
-O sistema exibe uma vitrine inicial com os produtos mais vendidos e os indicadores de resultados, incluindo o faturamento do dia, semana e mês, bem como a quantidade de fiados em aberto.
-
-- Narrativa para Relatório de Produtos com QRCode:
-O usuário seleciona a opção de relatório de produtos com QRCode e pode visualizar um relatório com os produtos cadastrados no sistema, incluindo as informações de cada produto e o QRCode correspondente.
-
-- Narrativa para Relatórios de Contas (Vencido, A Vencer):
-O usuário seleciona a opção de relatórios de contas e pode visualizar relatórios das contas vencidas e a vencer, bem como os clientes com fiados em aberto e o valor total devido.
-
-- Narrativa para Relatório de Resultados por Período:
-O usuário seleciona a opção de relatório de resultados por período e pode visualizar um relatório com os resultados de vendas e faturamento por dia, semana e mês, além de outras informações relevantes para análise do desempenho do negócio.
-
 ## 4. Diagramas de Classes
+
+## 5. Diagramas de Relacionamento de Entidade
+
+```mermaid
+erDiagram
+    CLIENTE ||--o{ PEDIDO : places
+    PEDIDO ||--|{ PRODUTO : contains
+    PEDIDO ||..|{ PAGAMENTO : uses
+´´´
