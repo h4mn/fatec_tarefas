@@ -180,28 +180,146 @@ graph LR
     end
 ```
 
-### 2.0 Lista de Narrativas
+### 2.8 Envio de Cobrança Individual
 
-- Narrativa para Envio de Cobrança Individual:
+#### Narrativa
+
 O usuário seleciona a opção de envio de cobrança individual e seleciona o cliente e o produto desejado. O sistema gera uma cobrança individual, que é enviada ao cliente via e-mail ou SMS.
 
-- Narrativa para Envio de Cobrança em Lote:
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso do Envio de Cobrança Individual
+---
+graph TB
+    A[Usuário] --- B[Geração de Cobrança Individual]
+    subgraph "`Sistema / **Envio de Cobrança Individual**`"
+        B --- C([Seleção do Cliente])
+        B --- D([Seleção dos Itens de Fiados Abertos])
+        B --- E([Envio da Cobrança Individual])
+        E --- F[Email / SMS / Whatsapp]
+        C --> D
+        D --> E
+    end
+    F --- G[Cliente]
+```
+
+### 2.9 Envio de Cobrança em Lote
+
+#### Narrativa
+
 O usuário seleciona a opção de envio de cobrança em lote e seleciona um grupo de clientes e produtos. O sistema gera uma cobrança em lote, que é enviada aos clientes via e-mail ou SMS.
 
-- Narrativa para Integração com o PIX:
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso do Envio de Cobrança em Lote
+---
+graph TB
+    A[Usuário] --- B[Geração de Cobrança em Lote]
+    subgraph "`Sistema / **Envio de Cobrança em Lote**`"
+        B --- C([Seleção do Grupo de Clientes])
+        B --- D([Envio da Cobrança em Lote])
+        D --- E[Email / SMS / Whatsapp]
+        C --> D
+    end
+    E --- F[Cliente A]
+    E --- G[Cliente B]
+    E --- H[Cliente N]
+```
+
+### 2.10 Integração com o PIX
+
+#### Narrativa
+
 O sistema é integrado à API do PIX e permite o pagamento dos fiados via PIX. O cliente pode selecionar a opção de pagar via PIX e escanear o QRCode gerado pelo sistema. O pagamento é registrado na API do Firebase.
 
-- Narrativa para Registro dos Pagamentos:
-O usuário seleciona a opção de registro dos pagamentos e pode registrar os pagamentos recebidos de cada cliente, incluindo a forma de pagamento (PIX, dinheiro, cartão, etc.) e a data do pagamento. As informações são registradas na API do Firebase.
+#### Diagrama
 
-- Narrativa para Vitrine Inicial com Indicadores de Resultado:
+```mermaid
+---
+title: Diagrama de Caso de Uso da Integração com o PIX
+---
+graph LR
+    A[Usuário] --- B[Integração com o PIX]
+    subgraph "`Sistema / **Integração com o PIX**`"
+        B --- C([Selecionar Conta de Cobrança])
+        B --- D([Selecionar Pagar via PIX])
+        B --- E([Escanear QrCode])
+        B --- F[Enviar Operação de Pagamento]
+        B --- G[Registrar pagamento]
+    end
+    F --- I[API do PIX]
+    G --- H[API Firebase]
+```
+### 2.11 Vitrine Inicial com Indicadores de Resultado
+
+#### Narrativa
+
 O sistema exibe uma vitrine inicial com os produtos mais vendidos e os indicadores de resultados, incluindo o faturamento do dia, semana e mês, bem como a quantidade de fiados em aberto.
 
-- Narrativa para Relatórios de Contas (Vencido, A Vencer):
-O usuário seleciona a opção de relatórios de contas e pode visualizar relatórios das contas vencidas e a vencer, bem como os clientes com fiados em aberto e o valor total devido.
+#### Diagrama
 
-- Narrativa para Relatório de Resultados por Período:
-O usuário seleciona a opção de relatório de resultados por período e pode visualizar um relatório com os resultados de vendas e faturamento por dia, semana e mês, além de outras informações relevantes para análise do desempenho do negócio.
+```mermaid
+---
+title: Diagrama de Caso de Uso da Vitrine Inicial com Indicadores de Resultado
+---
+graph LR
+    A[Usuário] --- B[Vitrine Inicial com Indicadores de Resultado]
+    subgraph "`Sistema / **Vitrine Inicial com Indicadores de Resultado**`"
+        B --- C([Visualização dos Indicadores de Resultados])
+        B --- D([Visualização das Contas a Receber])
+        B --- E([Visualização dos Resultados por Período])
+    end
+```
+
+### 2.12 Relatórios de Contas
+
+#### Narrativa
+
+O usuário seleciona a opção de relatórios de contas e pode visualizar relatórios das contas vencidas, a vencer, bem como as contas pagas e o total a receber.
+
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso dos Relatórios de Contas
+---
+graph LR
+    A[Usuário] --- B[Relatórios de Contas]
+    subgraph "`Sistema / **Relatórios de Contas**`"
+        B --- C([Visualização das Contas Vencidas])
+        B --- D([Visualização das Contas a Vencer])
+        B --- E([Visualização das Contas Pagas])
+        B --- F([Visualização do Total a Receber])
+    end
+```
+
+### 2.13 Relatórios de Resultados
+
+#### Narrativa
+
+O usuário seleciona a opção de relatórios de resultados e pode visualizar relatórios dos resultados de vendas e faturamento por dia, semana e mês, bem como outras informações relevantes para análise do desempenho do negócio.
+
+#### Diagrama
+
+```mermaid
+---
+title: Diagrama de Caso de Uso dos Relatórios de Resultados
+---
+graph LR
+    A[Usuário] --- B[Relatórios de Resultados]
+    subgraph "`Sistema / **Relatórios de Resultados**`"
+        B --- C([Visualização dos Resultados por Dia])
+        B --- D([Visualização dos Resultados por Semana])
+        B --- E([Visualização dos Resultados por Mês])
+        B --- F([Visualização dos Resultados por Período])
+        B --- G([Visualização dos Resultados por Produto])
+        B --- H([Visualização dos Resultados por Cliente])
+    end
+```
 
 ## 3. Diagramas de Sequencia
 
@@ -211,6 +329,7 @@ O diagrama de sequência mostra a interação entre objetos em uma linha do temp
 
 ### 3.1 Cadastrar Cliente
 
+- O cliente manifesta interesse em se cadastrar no programa de fidelidade;
 - O atendente da loja inicia o processo de cadastro do cliente;
 - O atendente solicita as informações pessoais do cliente;
 - O cliente fornece as informações solicitadas;
@@ -229,12 +348,13 @@ O diagrama de sequência mostra a interação entre objetos em uma linha do temp
 title: Diagrama de Sequencia do Cadastro de Cliente
 ---
 sequenceDiagram
-    participant Atendente
     participant Cliente
+    participant Atendente
     participant Sistema
     participant Banco de Dados
+    Cliente->>Atendente: Manifesta interesse em se cadastrar
     Atendente->>Sistema: Iniciar cadastro
-    Sistema->>Atendente: Solicitar informações pessoais
+    Sistema->>Cliente: Solicitar informações pessoais
     Cliente->>Atendente: Fornece informações
     Atendente->>Sistema: Acessa sistema de gerenciamento de clientes
     Sistema->>Atendente: Exibe tela de cadastro
