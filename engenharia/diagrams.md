@@ -369,6 +369,90 @@ sequenceDiagram
 
 ## 4. Diagramas de Classes
 
+Diagrama de Classes é uma ferramenta da UML (Unified Modeling Language) utilizada para modelar a estrutura de um sistema orientado a objetos. Ele descreve as classes, atributos e métodos de um sistema, bem como as relações entre as classes.
+
+### 4.1. Classes do Ambiente do Vendedor
+
+#### 4.1.1. Classe de autenticação
+
+```mermaid
+---
+title: Diagrama da classe de autenticação
+---
+classDiagram
+    class Autenticacao{
+        +string email
+        +string senha
+        +Acessar()
+    }
+
+    Autenticacao <|-- AutenticacaoDireta
+    Autenticacao <|-- AutenticacaoGoogle
+
+    class AutenticacaoDireta{
+        +Login()
+    }
+    class AutenticacaoGoogle{
+        +Login()
+    }
+```
+
+#### 4.1.2. Classe de Cadastros
+
+```mermaid
+---
+title: Diagrama de Classe de Cadastros
+---
+classDiagram
+    class Foto{
+        +string url
+        +string alt
+        +Exibir()
+    }
+
+    class Cadastro{
+        +string nome
+        +Foto foto
+        +Cadastrar()
+    }
+
+    Foto --|> Cadastro
+    Cadastro <|-- CadastroCliente
+    Cadastro <|-- CadastroProduto
+
+    class CadastroCliente{
+        +string telefone
+        +string email
+    }
+    class CadastroProduto{
+        +string descricao
+        +double preco
+    }
+```
+
+#### 4.1.3. Classe de Fiados
+
+```mermaid
+---
+title: Diagrama de Classe de Fiados
+---
+classDiagram
+    class Divida{
+        +CadastroCliente devedor
+        +double debito
+        +date compra
+        +date vencimento
+    }
+
+    Divida <|-- Ajuste
+
+    class Ajuste{
+        +adicionarDivida(CadastroCliente, debito, compra, vencimento)
+        +efetuarPagamento(Divida)
+        +List<Divida> consultarDividas()
+    }
+```
+
 ## 5. Diagramas de Relacionamento de Entidade
 
 ```mermaid
