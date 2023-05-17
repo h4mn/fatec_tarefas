@@ -438,20 +438,74 @@ title: Diagrama de Classe de Fiados
 ---
 classDiagram
     class Divida{
-        +CadastroCliente devedor
-        +double debito
-        +date compra
-        +date vencimento
+        #CadastroCliente devedor
+        #double debito
+        #date compra
+        #date vencimento
+        #date pagamento
     }
 
     Divida <|-- Ajuste
 
     class Ajuste{
+        -double valor
+        -date data
+        -Divida divida
+
         +adicionarDivida(CadastroCliente, debito, compra, vencimento)
         +efetuarPagamento(Divida)
-        +List<Divida> consultarDividas()
+        +enviarCobranca(Divida)
+        +consultarDividas(): List~Divida~
+        +consultarPagamentos(): List~Divida~
     }
 ```
+
+#### 4.1.4. Classe de Relatórios
+
+```mermaid
+---
+title: Diagrama de Classe de Relatórios
+---
+classDiagram
+    class Fonte{
+        +dados(): dataObject
+    }
+
+    class Visualizador{
+        #PDF pdf
+        #HTML html
+
+        +visualizar(Relatorio)
+    }
+
+    class Relatorio{
+        #Fonte fonte
+        #Visualizador visualizador
+
+        +montarFiltros() (virtual)
+        +prepararDados()
+        +gerar()
+    }
+    
+    class Relatorios{
+        +Relatorio consultarVendas()
+        +Relatorio consultarResultados()
+    }
+
+    Relatorio -- Relatorios
+    Fonte --|> Relatorio : recupera os dados    
+    Relatorio --|> Visualizador
+```
+
+### 4.2. Classes do Ambiente do Cliente
+
+L[Convite / Token] -.-> B
+B --- C[Vitrine Inicial]
+C --- D([Informações do Cliente])
+C --- E([Comprar Fiado pelo QRCode])
+C --- F([Fiados em Aberto])
+C --- G([Produtos Disponíveis])
+C --- H([Pagamento dos Fiados])
 
 ## 5. Diagramas de Relacionamento de Entidade
 
