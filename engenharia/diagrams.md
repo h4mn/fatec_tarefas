@@ -487,14 +487,31 @@ classDiagram
         +gerar()
     }
     
+    class RelatorioVendas{
+        +montarFiltros() (override)
+        +prepararDados()
+        +gerar()
+    }
+
+    class RelatorioResultados{
+        +montarFiltros() (override)
+        +prepararDados()
+        +gerar()
+    }
+
     class Relatorios{
-        +Relatorio consultarVendas()
-        +Relatorio consultarResultados()
+        +RelatorioVendas relatorioVendas
+        +RelatorioResultados relatorioResultados
+
+        +gerarRelatorioVendas()
+        +gerarRelatorioResultados()
     }
 
     Relatorio -- Relatorios
-    Fonte --|> Relatorio : recupera os dados    
-    Relatorio --|> Visualizador
+    Relatorio <|-- RelatorioVendas
+    Relatorio <|-- RelatorioResultados
+    Fonte o-- Relatorio : recupera os dados    
+    Relatorio o-- Visualizador
 ```
 
 ### 4.2. Classes do Ambiente do Cliente

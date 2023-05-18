@@ -6,7 +6,9 @@ key = get_random_bytes(32)
 
 # Criando o cipher e criptografando a mensagem
 cipher = AES.new(key, AES.MODE_EAX)
+
 text = b"Fatec - Seguranca da Informacao"
+
 nonce = cipher.nonce
 ciphertext, tag = cipher.encrypt_and_digest(text)
 
