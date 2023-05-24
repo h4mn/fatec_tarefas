@@ -2,6 +2,7 @@
 
 ```text
 Prazo de entrega: 24/05/2023
+Renderizado em: https://github.com/h4mn/fatec_tarefas/blob/main/seguran%C3%A7a/atividades/reposi%C3%A7%C3%A3o_01.md
 ```
 
 ## 1. Objetivo
