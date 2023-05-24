@@ -1,10 +1,5 @@
 # Política de Segurança da Informação
 
-```text
-Prazo de entrega: 24/05/2023
-Renderizado em: https://github.com/h4mn/fatec_tarefas/blob/main/seguran%C3%A7a/atividades/reposi%C3%A7%C3%A3o_01.md
-```
-
 ## 1. Objetivo
 
 Com base nas legislações relacionadas à Segurança da Informação, elencadas a seguir, elabore um texto de no máximo duas laudas de acordo com as normas ABNT fazendo a análise de cada um dos crimes digitais noticiados nas três reportagens disponibilizadas. É importante elencar quais artigos de quais leis podem ser utilizadas em cada uma das situações e o motivo de seu uso.
@@ -120,3 +115,4 @@ Ao fazer as considerações finais, verifica-se que este texto reforça a import
 - [Lei Nº 12.965, de 23 de abril de 2014](http://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l12965.htm)
 - [Lei Nº 13.853, de 14 de agosto de 2018](http://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/L13853.htm)
 - [Lei Nº 14.155, de 27 de maio de 2021](http://www.planalto.gov.br/ccivil_03/_ato2019-2022/2021/lei/L14155.htm)
+- [Renderizado em github.com](https://github.com/h4mn/fatec_tarefas/blob/main/seguran%C3%A7a/atividades/reposi%C3%A7%C3%A3o_01.md)
