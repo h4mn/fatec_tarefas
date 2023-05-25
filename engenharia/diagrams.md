@@ -371,33 +371,41 @@ sequenceDiagram
 
 Diagrama de Classes é uma ferramenta da UML (Unified Modeling Language) utilizada para modelar a estrutura de um sistema orientado a objetos. Ele descreve as classes, atributos e métodos de um sistema, bem como as relações entre as classes.
 
-### 4.1. Classes do Ambiente do Vendedor
-
-#### 4.1.1. Classe de autenticação
+### 4.1. Classes de Autenticação
 
 ```mermaid
 ---
 title: Diagrama da classe de autenticação
 ---
 classDiagram
+    class Ambiente{
+        +string token
+    }
+
     class Autenticacao{
         +string email
         +string senha
-        +Acessar()
+        Ambiente ambiente
+        +Acessar(token: string): void
     }
-
+    
+    Autenticacao "1" -- "1" Ambiente : está associada a
+    Autenticacao <|-- AutenticacaoToken
     Autenticacao <|-- AutenticacaoDireta
     Autenticacao <|-- AutenticacaoGoogle
 
+    class AutenticacaoToken{
+        +Acessar(token: string): void
+    }
     class AutenticacaoDireta{
-        +Login()
+        +Acessar(): void
     }
     class AutenticacaoGoogle{
-        +Login()
+        +Acessar(): void
     }
 ```
 
-#### 4.1.2. Classe de Cadastros
+#### 4.2. Classe de Cadastros
 
 ```mermaid
 ---
@@ -416,10 +424,16 @@ classDiagram
         +Cadastrar()
     }
 
-    Foto --|> Cadastro
+    Foto -- Cadastro
+    Cadastro <|-- CadastroUsuario
     Cadastro <|-- CadastroCliente
     Cadastro <|-- CadastroProduto
 
+    class CadastroUsuario{
+        -string token
+        +string telefone
+        +string email
+    }
     class CadastroCliente{
         +string telefone
         +string email
@@ -430,7 +444,7 @@ classDiagram
     }
 ```
 
-#### 4.1.3. Classe de Fiados
+#### 4.3. Classe de Fiados
 
 ```mermaid
 ---
@@ -460,7 +474,46 @@ classDiagram
     }
 ```
 
-#### 4.1.4. Classe de Relatórios
+#### 4.4. Classe de Negociações
+
+```mermaid
+---
+title: Diagrama de Classe de Negociações
+---
+classDiagram
+    class Negociacao{
+        #CadastroCliente cliente
+        #CadastroProduto produto
+        #double preco
+        #date data
+        #date vencimento
+        #date pagamento
+    }
+
+    class Compra{
+        Efetuar Compra utilizando o QRCode
+        +adicionarCompra(CadastroCliente, CadastroProduto, preco, data, vencimento)
+        +efetuarPagamento(Negociacao)
+        +enviarCobranca(Negociacao)
+        +consultarCompras(): List~Negociacao~
+        +consultarPagamentos(): List~Negociacao~
+    }
+
+    class Venda{
+        Disponibilizar QRCode dos Produtos
+        +adicionarVenda(CadastroCliente, CadastroProduto, preco, data, vencimento)
+        +efetuarPagamento(Negociacao)
+        +enviarCobranca(Negociacao)
+        +consultarVendas(): List~Negociacao~
+        +consultarPagamentos(): List~Negociacao~
+    }
+
+    Negociacao o-- Compra
+    Negociacao o-- Venda
+    
+```
+
+#### 4.5. Classe de Relatórios
 
 ```mermaid
 ---
@@ -499,30 +552,29 @@ classDiagram
         +gerar()
     }
 
+    class RelatorioDividas{
+        +montarFiltros() (override)
+        +prepararDados()
+        +gerar()
+    }
+
     class Relatorios{
         +RelatorioVendas relatorioVendas
         +RelatorioResultados relatorioResultados
+        +RelatorioDividas relatorioDividas
 
         +gerarRelatorioVendas()
         +gerarRelatorioResultados()
+        +gerarRelatorioDividas()
     }
 
     Relatorio -- Relatorios
     Relatorio <|-- RelatorioVendas
     Relatorio <|-- RelatorioResultados
+    Relatorio <|-- RelatorioDividas
     Fonte o-- Relatorio : recupera os dados    
     Relatorio o-- Visualizador
 ```
-
-### 4.2. Classes do Ambiente do Cliente
-
-L[Convite / Token] -.-> B
-B --- C[Vitrine Inicial]
-C --- D([Informações do Cliente])
-C --- E([Comprar Fiado pelo QRCode])
-C --- F([Fiados em Aberto])
-C --- G([Produtos Disponíveis])
-C --- H([Pagamento dos Fiados])
 
 ## 5. Diagramas de Relacionamento de Entidade
 
