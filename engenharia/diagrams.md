@@ -321,52 +321,6 @@ graph LR
     end
 ```
 
-## 3. Diagramas de Sequencia
-
-Diagrama de Sequência é uma ferramenta da UML (Unified Modeling Language) utilizada para modelar a interação entre objetos em um sistema. Ele descreve a sequência de eventos que ocorrem ao longo do tempo e como os objetos colaboram para realizar uma determinada tarefa.
-
-O diagrama de sequência mostra a interação entre objetos em uma linha do tempo, destacando as mensagens trocadas entre eles. Ele é útil para entender como um sistema funciona, mostrando como os objetos se comunicam e colaboram uns com os outros para alcançar um objetivo.
-
-### 3.1 Cadastrar Cliente
-
-- O cliente manifesta interesse em se cadastrar no programa de fidelidade;
-- O atendente da loja inicia o processo de cadastro do cliente;
-- O atendente solicita as informações pessoais do cliente;
-- O cliente fornece as informações solicitadas;
-- O atendente acessa o sistema de gerenciamento de clientes;
-- O sistema exibe a tela de cadastro;
-- O atendente insere as informações do cliente nos campos correspondentes;
-- O sistema valida os dados inseridos;
-- O sistema verifica se o CPF do cliente já está cadastrado;
-- O sistema cria um novo registro para o cliente;
-- O sistema armazena as informações do cliente no banco de dados;
-- O sistema exibe uma mensagem de confirmação do cadastro;
-- O atendente entrega um cartão de fidelidade ao cliente.
-
-```mermaid
----
-title: Diagrama de Sequencia do Cadastro de Cliente
----
-sequenceDiagram
-    participant Cliente
-    participant Atendente
-    participant Sistema
-    participant Banco de Dados
-    Cliente->>Atendente: Manifesta interesse em se cadastrar
-    Atendente->>Sistema: Iniciar cadastro
-    Sistema->>Cliente: Solicitar informações pessoais
-    Cliente->>Atendente: Fornece informações
-    Atendente->>Sistema: Acessa sistema de gerenciamento de clientes
-    Sistema->>Atendente: Exibe tela de cadastro
-    Atendente->>Sistema: Insere informações do cliente
-    Sistema->>Atendente: Valida dados inseridos
-    Sistema->>Atendente: Verifica se CPF já está cadastrado
-    Sistema->>Banco de Dados: Cria novo registro
-    Sistema->>Banco de Dados: Armazena informações do cliente
-    Sistema->>Atendente: Exibe mensagem de confirmação
-    Atendente->>Cliente: Entrega cartão de fidelidade
-```
-
 ## 4. Diagramas de Classes
 
 Diagrama de Classes é uma ferramenta da UML (Unified Modeling Language) utilizada para modelar a estrutura de um sistema orientado a objetos. Ele descreve as classes, atributos e métodos de um sistema, bem como as relações entre as classes.
@@ -576,11 +530,80 @@ classDiagram
     Relatorio o-- Visualizador
 ```
 
-## 5. Diagramas de Relacionamento de Entidade
+## 5. Diagramas de Sequencia
+
+Diagrama de Sequência é uma ferramenta da UML (Unified Modeling Language) utilizada para modelar a interação entre objetos em um sistema. Ele descreve a sequência de eventos que ocorrem ao longo do tempo e como os objetos colaboram para realizar uma determinada tarefa.
+
+O diagrama de sequência mostra a interação entre objetos em uma linha do tempo, destacando as mensagens trocadas entre eles. Ele é útil para entender como um sistema funciona, mostrando como os objetos se comunicam e colaboram uns com os outros para alcançar um objetivo.
+
+### 3.1 Cadastrar Cliente
+
+- O cliente manifesta interesse em se cadastrar no programa de fidelidade;
+- O atendente da loja inicia o processo de cadastro do cliente;
+- O atendente solicita as informações pessoais do cliente;
+- O cliente fornece as informações solicitadas;
+- O atendente acessa o sistema de gerenciamento de clientes;
+- O sistema exibe a tela de cadastro;
+- O atendente insere as informações do cliente nos campos correspondentes;
+- O sistema valida os dados inseridos;
+- O sistema verifica se o CPF do cliente já está cadastrado;
+- O sistema cria um novo registro para o cliente;
+- O sistema armazena as informações do cliente no banco de dados;
+- O sistema exibe uma mensagem de confirmação do cadastro;
+- O atendente entrega um cartão de fidelidade ao cliente.
 
 ```mermaid
+---
+title: Diagrama de Sequencia do Cadastro de Cliente
+---
+sequenceDiagram
+    participant Cliente
+    participant Atendente
+    participant Sistema
+    participant Banco de Dados
+    Cliente->>Atendente: Manifesta interesse em se cadastrar
+    Atendente->>Sistema: Iniciar cadastro
+    Sistema->>Cliente: Solicitar informações pessoais
+    Cliente->>Atendente: Fornece informações
+    Atendente->>Sistema: Acessa sistema de gerenciamento de clientes
+    Sistema->>Atendente: Exibe tela de cadastro
+    Atendente->>Sistema: Insere informações do cliente
+    Sistema->>Atendente: Valida dados inseridos
+    Sistema->>Atendente: Verifica se CPF já está cadastrado
+    Sistema->>Banco de Dados: Cria novo registro
+    Sistema->>Banco de Dados: Armazena informações do cliente
+    Sistema->>Atendente: Exibe mensagem de confirmação
+    Atendente->>Cliente: Entrega cartão de fidelidade
+```
+
+## 6. Diagramas de Relacionamento de Entidade
+
+```mermaid
+---
+title: Diagrama Legenda
+---
 erDiagram
-    CLIENTE ||--o{ PEDIDO : places
-    PEDIDO ||--|{ PRODUTO : contains
-    PEDIDO ||..|{ PAGAMENTO : uses
-´´´
+    ENTIDADE_A ||--|| ENTIDADE_1 : "Um para um (1:1)"
+    ENTIDADE_B ||--o{ ENTIDADE_2 : "Um para muitos (1:N)"
+    ENTIDADE_C ||--|{ ENTIDADE_3 : "Pai para filhos (1:N*)"
+    ENTIDADE_D |o--o{ ENTIDADE_4 : "Zero para muitos (0:N)"
+    ENTIDADE_E }|--o{ ENTIDADE_5 : "Muitos para muitos (N:M)"
+```
+
+### 6.1. Relacionamento de Entidade de Autenticação
+
+```mermaid
+---
+title: Diagrama ER de Autenticação
+---
+erDiagram
+    AUTENTICACAO ||--|| AUTENTICACAO_TIPO : "é um tipo de"
+    USUARIO ||--|| PERMISSAO : "possui"
+    USUARIO ||--o{ AUTENTICACAO : "faz"
+    AUTENTICACAO ||--|{ TICKET : "emite"
+    USUARIO ||--o{ TICKET : "possui"
+    TICKET ||--|{ AMBIENTE : "é emitido para"
+    TICKET ||--|{ SESSAO : "inicia"
+    USUARIO ||--|{ AMBIENTE : "acessa"  
+
+```
