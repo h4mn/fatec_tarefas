@@ -597,6 +597,75 @@ erDiagram
 title: Diagrama ER de Autenticação
 ---
 erDiagram
+    USUARIO ||--|| CADASTRO : "é um tipo de"
+    USUARIO ||--|| PERMISSAO : "possui"
+    USUARIO ||--|{ SESSAO : "inicia"
+```
+
+### 6.2. Relacionamento de Entidade de Cadastros
+
+```mermaid
+---
+title: Diagrama ER de Cadastros
+---
+erDiagram
+    USUARIO ||--|| CADASTRO : "é um tipo de"
+    VENDEDOR ||--|| CADASTRO : "é um tipo de"
+    CLIENTE ||--|| CADASTRO : "é um tipo de"
+```
+
+### 6.3. Relacionamento de Entidade de Permissão
+
+```mermaid
+---
+title: Diagrama ER de Cadastros
+---
+erDiagram
+    USUARIO ||--|| FUNCAO : possui
+    FUNCAO ||--|{ PERMISSAO : tem
+    PERMISSAO ||--|| MODULO : "para acessar"
+    FUNCAO ||--|{ FUNCAO_PERMISSAO : "mapeia"
+    PERMISSAO ||--|{ FUNCAO_PERMISSAO : "mapeia"
+
+    USUARIO {
+        integer idUsuario PK
+        string nome UK
+        string email
+        string senha
+        integer idFuncao FK
+    }
+    FUNCAO {
+        integer idFuncao PK
+        string nome
+        string descricao
+    }
+    PERMISSAO {
+        integer idPermissao PK
+        string nome
+        string descricao
+        bool podeAbrir
+        bool podeCriar
+        bool podeEditar
+        bool podeExcluir
+        integer idModulo FK
+    }
+    MODULO {
+        integer idModulo PK
+        string nome
+        string descricao
+    }
+    FUNCAO_PERMISSAO {
+        integer idFuncao FK
+        integer idPermissao FK
+    }
+```
+
+---
+```mermaid
+---
+title: Diagrama ER de Cadastros
+---
+erDiagram
     AUTENTICACAO ||--|| AUTENTICACAO_TIPO : "é um tipo de"
     USUARIO ||--|| PERMISSAO : "possui"
     USUARIO ||--o{ AUTENTICACAO : "faz"
