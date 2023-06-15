@@ -6,7 +6,7 @@
 
 O Mermaid é uma ferramenta de código aberto que permite criar diagramas a partir de texto, utilizando uma sintaxe simples. É uma biblioteca javascript que permite criar diagramas com código markdown. O objetivo é facilitar a criação de diagramas e a sua manutenção, já que os diagramas são armazenados no formato markdown.
 
-Para usar o Mermaid, basta criar um arquivo markdown e adicionar o código do diagrama. O código do diagrama deve ser inserido entre as tags ```mermaid e ```.
+Para usar o Mermaid, basta criar um arquivo markdown e adicionar o código do diagrama. O código do diagrama deve ser inserido entre as tags \`\`\````mermaid``` e ```.
 
 ## 2. Diagrama de Caso de Uso
 
@@ -530,13 +530,196 @@ classDiagram
     Relatorio o-- Visualizador
 ```
 
-## 5. Diagramas de Sequencia
+## 5. Diagramas de Relacionamento de Entidade
+
+```mermaid
+---
+title: Diagrama Legenda
+---
+erDiagram
+    ENTIDADE_A ||--|| ENTIDADE_1 : "Um para um (1:1)"
+    ENTIDADE_B ||--o{ ENTIDADE_2 : "Um para muitos (1:N)"
+    ENTIDADE_C ||--|{ ENTIDADE_3 : "Pai para filhos (1:N*)"
+    ENTIDADE_D |o--o{ ENTIDADE_4 : "Zero para muitos (0:N)"
+    ENTIDADE_E }|--o{ ENTIDADE_5 : "Muitos para muitos (N:M)"
+```
+
+### 5.1. Relacionamento de Entidade de Cadastros
+
+```mermaid
+---
+title: Diagrama ER de Cadastros
+---
+erDiagram
+    VENDEDOR {
+        int ID
+        string Departamento
+    }
+    USUARIO {
+        int ID
+        string Login
+        string Senha
+    }
+    CLIENTE {
+        int ID
+        string Observacao
+    }
+    CADASTRO {
+        int ID
+        string Nome
+        string Email
+        string Telefone
+        string Endereco
+    }
+    VENDEDOR ||--|| CADASTRO : "é um tipo de"
+    USUARIO ||--|| CADASTRO : "é um tipo de"
+    CLIENTE ||--|| CADASTRO : "é um tipo de"
+    USUARIO ||--o{ VENDEDOR : "é"
+    USUARIO ||--o{ CLIENTE : "é"
+```
+
+### 5.2. Relacionamento de Entidade de Autenticação
+
+```mermaid
+---
+title: Diagrama ER de Autenticação
+---
+erDiagram
+    FUNCAO {
+        integer ID
+        string Nome
+        string Descricao
+    }
+    PERMISSAO {
+        integer ID
+        string Nome
+        string Descricao
+        bool Abrir
+        bool Criar
+        bool Editar
+        bool Excluir
+        integer ModuloID
+    }
+    MODULO {
+        integer ID
+        string Nome
+        string Descricao
+    }
+    FUNCAO_PERMISSAO {
+        integer FuncaoID
+        integer PermissaoID
+    }
+    SESSAO {
+        int ID
+        int UsuarioID
+        date DataInicio
+        date DataFim
+        string Token
+    }
+    USUARIO ||--|| FUNCAO : possui
+    FUNCAO ||--|{ PERMISSAO : tem
+    PERMISSAO ||--|| MODULO : "para acessar"
+    FUNCAO ||--|{ FUNCAO_PERMISSAO : "mapeia"
+    PERMISSAO ||--|{ FUNCAO_PERMISSAO : "mapeia"
+    USUARIO ||--o{ SESSAO : "inicia"
+```
+
+### 5.3. Relacionamento de Entidade de Estoque
+
+```mermaid
+---
+title: Diagrama ER de Estoque
+---
+erDiagram
+    PRODUTO {
+        int ID
+        string Nome
+        string Descricao
+        int Estoque
+        string QRCode
+        string Foto
+    }
+    TABELA {
+        int ID
+        string Nome
+    }
+    PRECO {
+        int ID
+        int ProdutoID
+        int TabelaID
+        float Preco
+    }
+    PEDIDO {
+        int ID
+        date Data
+        int ClienteID
+        int VendedorID
+        int TabelaID
+    }
+    ITEM {
+        int ID
+        int PedidoID
+        int ProdutoID
+        float Valor
+        int Quantidade
+    }
+    PRODUTO ||--o{ PRECO : "possui"
+    TABELA ||--o{ PRECO : "contém"
+    PEDIDO ||--o{ TABELA : "usa"
+    PEDIDO ||--o{ ITEM : "inclui"
+    PRODUTO ||--o{ ITEM : "é"
+    CADASTRO ||--o{ PEDIDO : "realiza"
+
+```
+
+## 6. Diagramas de Estado
+
+Diagrama de estados é uma ferramenta da UML (Unified Modeling Language) utilizada para modelar o comportamento de um sistema. Ele mostra os possíveis estados de um objeto e como ele pode mudar de um estado para outro ao longo do tempo. O diagrama de estados é útil para entender o comportamento de um sistema e para projetar sistemas que se comportam de maneira diferente em função do estado atual.
+
+### 6.1. Estados do Aplicativo
+
+```mermaid
+stateDiagram-v2
+    [*] --> Splash
+    Splash --> Inicial
+    Inicial --> LoginSenha
+    LoginSenha --> AreaVendedor
+    AreaVendedor --> CadastroCliente
+    CadastroCliente --> AreaVendedor
+    CadastroCliente --> GerarToken
+    GerarToken --> CadastroCliente
+    AreaVendedor --> CadastroProduto
+    CadastroProduto --> AreaVendedor
+    CadastroProduto --> ImprimirFotoComQRCode
+    ImprimirFotoComQRCode --> CadastroProduto
+    AreaVendedor --> ControleCobranca
+    ControleCobranca --> AreaVendedor
+    ControleCobranca --> EnviarCobranca
+    EnviarCobranca --> ControleCobranca
+    AreaVendedor --> [*]
+
+    Inicial --> [*]
+
+    Inicial --> LoginToken
+    LoginToken --> AreaCliente
+    AreaCliente --> ComprarComQRCode
+    ComprarComQRCode --> AreaCliente
+    AreaCliente --> VisualizarDebitos
+    VisualizarDebitos --> AreaCliente
+    AreaCliente --> EfetuarPagamento
+    EfetuarPagamento --> AreaCliente
+    AreaCliente --> [*]
+```
+
+https://www.figma.com/file/c4cWekUcbvYv8YJbqAsEz7/Prototyping-in-Figma?type=design&node-id=0-1&t=yQgQ1At4pomj7HHa-0
+
+## 9. Diagramas de Sequencia
 
 Diagrama de Sequência é uma ferramenta da UML (Unified Modeling Language) utilizada para modelar a interação entre objetos em um sistema. Ele descreve a sequência de eventos que ocorrem ao longo do tempo e como os objetos colaboram para realizar uma determinada tarefa.
 
 O diagrama de sequência mostra a interação entre objetos em uma linha do tempo, destacando as mensagens trocadas entre eles. Ele é útil para entender como um sistema funciona, mostrando como os objetos se comunicam e colaboram uns com os outros para alcançar um objetivo.
 
-### 3.1 Cadastrar Cliente
+### 9.1 Cadastrar Cliente
 
 - O cliente manifesta interesse em se cadastrar no programa de fidelidade;
 - O atendente da loja inicia o processo de cadastro do cliente;
@@ -574,105 +757,4 @@ sequenceDiagram
     Sistema->>Banco de Dados: Armazena informações do cliente
     Sistema->>Atendente: Exibe mensagem de confirmação
     Atendente->>Cliente: Entrega cartão de fidelidade
-```
-
-## 6. Diagramas de Relacionamento de Entidade
-
-```mermaid
----
-title: Diagrama Legenda
----
-erDiagram
-    ENTIDADE_A ||--|| ENTIDADE_1 : "Um para um (1:1)"
-    ENTIDADE_B ||--o{ ENTIDADE_2 : "Um para muitos (1:N)"
-    ENTIDADE_C ||--|{ ENTIDADE_3 : "Pai para filhos (1:N*)"
-    ENTIDADE_D |o--o{ ENTIDADE_4 : "Zero para muitos (0:N)"
-    ENTIDADE_E }|--o{ ENTIDADE_5 : "Muitos para muitos (N:M)"
-```
-
-### 6.1. Relacionamento de Entidade de Autenticação
-
-```mermaid
----
-title: Diagrama ER de Autenticação
----
-erDiagram
-    USUARIO ||--|| CADASTRO : "é um tipo de"
-    USUARIO ||--|| PERMISSAO : "possui"
-    USUARIO ||--|{ SESSAO : "inicia"
-```
-
-### 6.2. Relacionamento de Entidade de Cadastros
-
-```mermaid
----
-title: Diagrama ER de Cadastros
----
-erDiagram
-    USUARIO ||--|| CADASTRO : "é um tipo de"
-    VENDEDOR ||--|| CADASTRO : "é um tipo de"
-    CLIENTE ||--|| CADASTRO : "é um tipo de"
-```
-
-### 6.3. Relacionamento de Entidade de Permissão
-
-```mermaid
----
-title: Diagrama ER de Cadastros
----
-erDiagram
-    USUARIO ||--|| FUNCAO : possui
-    FUNCAO ||--|{ PERMISSAO : tem
-    PERMISSAO ||--|| MODULO : "para acessar"
-    FUNCAO ||--|{ FUNCAO_PERMISSAO : "mapeia"
-    PERMISSAO ||--|{ FUNCAO_PERMISSAO : "mapeia"
-
-    USUARIO {
-        integer idUsuario PK
-        string nome UK
-        string email
-        string senha
-        integer idFuncao FK
-    }
-    FUNCAO {
-        integer idFuncao PK
-        string nome
-        string descricao
-    }
-    PERMISSAO {
-        integer idPermissao PK
-        string nome
-        string descricao
-        bool podeAbrir
-        bool podeCriar
-        bool podeEditar
-        bool podeExcluir
-        integer idModulo FK
-    }
-    MODULO {
-        integer idModulo PK
-        string nome
-        string descricao
-    }
-    FUNCAO_PERMISSAO {
-        integer idFuncao FK
-        integer idPermissao FK
-    }
-```
-
----
-```mermaid
----
-title: Diagrama ER de Cadastros
----
-erDiagram
-    AUTENTICACAO ||--|| AUTENTICACAO_TIPO : "é um tipo de"
-    USUARIO ||--|| PERMISSAO : "possui"
-    USUARIO ||--o{ AUTENTICACAO : "faz"
-    AUTENTICACAO ||--|{ TICKET : "emite"
-    USUARIO ||--o{ TICKET : "possui"
-    TICKET ||--|{ AMBIENTE : "é emitido para"
-    TICKET ||--|{ SESSAO : "inicia"
-    USUARIO ||--|{ AMBIENTE : "acessa"  
-
 ```
