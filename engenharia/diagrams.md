@@ -73,7 +73,7 @@ graph LR
 
 #### Narrativa
 
-O usuário seleciona a opção de cadastro de clientes e preenche os campos com as informações solicitadas. As informações são validadas e armazenadas na API do Firebase, que é responsável pelo armazenamento dos dados dos clientes.
+O usuário seleciona a opção de cadastro de clientes e preenche os campos com as informações solicitadas. As informações são validadas e armazenadas na API, que é responsável pelo armazenamento dos dados dos clientes.
 
 #### Diagrama
 
@@ -83,19 +83,19 @@ title: Diagrama de Caso de Uso do Cadastro de Clientes
 ---
 graph LR
     A[Usuário] --- B[Cadastro de Clientes]
-    subgraph "`Sistema / **Cadastro de Clientes**`"
+    subgraph "`Ambiente do Vendedor / **Cadastro de Clientes**`"
         direction TB
         B --- C([Lançamento dos Dados do Cliente])
         B --- D([Armazenamento dos dados dos clientes])
     end
-    D --- F[API do Firebase]
+    D --- F[API]
 ```
 
 ### 2.4 Cadastro de Produtos
 
 #### Narrativa
 
-O usuário seleciona a opção de cadastro de produto e preenche os campos com as informações solicitadas, incluindo o QRCode do produto. As informações são validadas e armazenadas na API do Firebase.
+O usuário seleciona a opção de cadastro de produto e preenche os campos com as informações solicitadas, incluindo o QRCode do produto. As informações são validadas e armazenadas na API.
 
 #### Diagrama
 
@@ -105,12 +105,12 @@ title: Diagrama de Caso de Uso do Cadastro de Produtos
 ---
 graph LR
     A[Usuário] --- B[Cadastro de Produtos]
-    subgraph "`Sistema / **Cadastro de Produtos**`"
+    subgraph "`Ambiente do Vendedor / **Cadastro de Produtos**`"
         direction TB
         B --- C([Lançamento dos Dados do Produto])
         B --- D([Armazenamento dos dados dos produtos])
     end
-    D --- F[API do Firebase]
+    D --- F[API]
 ```
 
 ### 2.5 Relatório de Produtos com QRCode
@@ -127,7 +127,7 @@ title: Diagrama de Caso de Uso do Relatório de Produtos com QRCode
 ---
 graph LR
     A[Usuário] --- B[Relatório de Produtos com QRCode]
-    subgraph "`Sistema / **Relatório de Produtos com QRCode**`"
+    subgraph "`Ambiente do Vendedor / **Relatório de Produtos com QRCode**`"
         direction TB
         B --- C([Visualização dos Produtos])
     end
@@ -137,7 +137,7 @@ graph LR
 
 #### Narrativa
 
-O cliente seleciona a opção de comprar fiado pelo QRCode e escaneia o QRCode do produto desejado. O sistema verifica se o cliente tem limite de crédito disponível e autoriza a compra, que é registrada na API do Firebase.
+O cliente seleciona a opção de comprar fiado pelo QRCode e escaneia o QRCode do produto desejado. O sistema verifica se o cliente tem limite de crédito disponível e autoriza a compra, que é registrada na API.
 
 #### Diagrama
 
@@ -147,14 +147,14 @@ title: Diagrama de Caso de Uso do Comprar Fiado pelo QRCode
 ---
 graph LR
     A[Cliente] --- B[Comprar Fiado pelo QRCode]
-    subgraph "`Sistema / **Comprar Fiado pelo QRCode**`"
+    subgraph "`Ambiente do Cliente / **Comprar Fiado pelo QRCode**`"
         direction TB
         B --- C([Escaneamento do QRCode])
         B --- D([Verificação do Limite de Crédito])
         B --- E([Autorização da Compra])
         B --- F([Registro da Compra])
     end
-    F --- G[API do Firebase]
+    F --- G[API]
 ```
 
 ### 2.7 Controle dos Fiados
@@ -194,7 +194,7 @@ title: Diagrama de Caso de Uso do Envio de Cobrança Individual
 ---
 graph TB
     A[Usuário] --- B[Geração de Cobrança Individual]
-    subgraph "`Sistema / **Envio de Cobrança Individual**`"
+    subgraph "`Ambiente do Vendedor / **Envio de Cobrança Individual**`"
         B --- C([Seleção do Cliente])
         B --- D([Seleção dos Itens de Fiados Abertos])
         B --- E([Envio da Cobrança Individual])
@@ -219,7 +219,7 @@ title: Diagrama de Caso de Uso do Envio de Cobrança em Lote
 ---
 graph TB
     A[Usuário] --- B[Geração de Cobrança em Lote]
-    subgraph "`Sistema / **Envio de Cobrança em Lote**`"
+    subgraph "`Ambiente do Vendedor / **Envio de Cobrança em Lote**`"
         B --- C([Seleção do Grupo de Clientes])
         B --- D([Envio da Cobrança em Lote])
         D --- E[Email / SMS / Whatsapp]
@@ -234,7 +234,7 @@ graph TB
 
 #### Narrativa
 
-O sistema é integrado à API do PIX e permite o pagamento dos fiados via PIX. O cliente pode selecionar a opção de pagar via PIX e escanear o QRCode gerado pelo sistema. O pagamento é registrado na API do Firebase.
+O sistema é integrado à API do PIX e permite o pagamento dos fiados via PIX. O cliente pode selecionar a opção de pagar via PIX e escanear o QRCode gerado pelo sistema. O pagamento é registrado na API.
 
 #### Diagrama
 
@@ -252,7 +252,7 @@ graph LR
         B --- G[Registrar pagamento]
     end
     F --- I[API do PIX]
-    G --- H[API Firebase]
+    G --- H[API]
 ```
 ### 2.11 Vitrine Inicial com Indicadores de Resultado
 
@@ -268,7 +268,7 @@ title: Diagrama de Caso de Uso da Vitrine Inicial com Indicadores de Resultado
 ---
 graph LR
     A[Usuário] --- B[Vitrine Inicial com Indicadores de Resultado]
-    subgraph "`Sistema / **Vitrine Inicial com Indicadores de Resultado**`"
+    subgraph "`Ambiente do Vendedor / **Vitrine Inicial com Indicadores de Resultado**`"
         B --- C([Visualização dos Indicadores de Resultados])
         B --- D([Visualização das Contas a Receber])
         B --- E([Visualização dos Resultados por Período])
@@ -289,7 +289,7 @@ title: Diagrama de Caso de Uso dos Relatórios de Contas
 ---
 graph LR
     A[Usuário] --- B[Relatórios de Contas]
-    subgraph "`Sistema / **Relatórios de Contas**`"
+    subgraph "`Ambiente do Vendedor / **Relatórios de Contas**`"
         B --- C([Visualização das Contas Vencidas])
         B --- D([Visualização das Contas a Vencer])
         B --- E([Visualização das Contas Pagas])
@@ -311,7 +311,7 @@ title: Diagrama de Caso de Uso dos Relatórios de Resultados
 ---
 graph LR
     A[Usuário] --- B[Relatórios de Resultados]
-    subgraph "`Sistema / **Relatórios de Resultados**`"
+    subgraph "`Ambiente do Vendedor / **Relatórios de Resultados**`"
         B --- C([Visualização dos Resultados por Dia])
         B --- D([Visualização dos Resultados por Semana])
         B --- E([Visualização dos Resultados por Mês])
@@ -682,7 +682,12 @@ Diagrama de estados é uma ferramenta da UML (Unified Modeling Language) utiliza
 stateDiagram-v2
     [*] --> Splash
     Splash --> Inicial
-    Inicial --> LoginSenha
+
+    Inicial --> Registrar
+    Registrar --> Inicial
+    Inicial --> Autenticar
+
+    Autenticar --> LoginSenha
     LoginSenha --> AreaVendedor
     AreaVendedor --> CadastroCliente
     CadastroCliente --> AreaVendedor
@@ -698,9 +703,9 @@ stateDiagram-v2
     EnviarCobranca --> ControleCobranca
     AreaVendedor --> [*]
 
-    Inicial --> [*]
+    Autenticar --> [*]
 
-    Inicial --> LoginToken
+    Autenticar --> LoginToken
     LoginToken --> AreaCliente
     AreaCliente --> ComprarComQRCode
     ComprarComQRCode --> AreaCliente
@@ -758,3 +763,5 @@ sequenceDiagram
     Sistema->>Atendente: Exibe mensagem de confirmação
     Atendente->>Cliente: Entrega cartão de fidelidade
 ```
+
+Este protótipo demontrará o fluxo geral dos estados do aplicativo, e como o usuário poderá navegar entre eles.
